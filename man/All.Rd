@@ -30,5 +30,29 @@ C. Loley, I.R Koenig, L. Hothorn, and A. Ziegler. A unifying framework for robus
 \examples{
 data(All)
 table(All$y,All$Genotype)
+#graphical display
+mosaicplot(with(All, table(y, Genotype)),main="")
+
+#calculating minor allele frequency
+sum(All[,3],2*All[,4])/(2*nrow(All))
+#in this case "G" is the minor allele
+All$Genotype <- factor(All$Genotype, levels=c("TT","GT","GG"))
+All$GenNum <- as.numeric(All$Genotype)
+
+#pseudo numeric variables for different modes of inheritance
+All$Add <- c(0, 0.5, 1)[All$GenNum]
+All$Dom <- c(0, 1, 1)[All$GenNum]
+All$Rec <- c(0, 0, 1)[All$GenNum]
+
+#Approach using three different genetic models
+GLMdom <- glm(y ~ Dom ,family=binomial, data=All)
+GLMadd <- glm(y ~ Add ,family=binomial, data=All)
+GLMrec <- glm(y ~ Rec ,family=binomial, data=All)
+
+#simultaneous assessment of multiple marginal models
+g <- glht(mmm(m1=GLMdom, m2=GLMadd, m3=GLMrec), mlf(m1="Dom=0", m2="Add=0", m3="Rec=0"))
+summary(g)
+summary(g)$test$pvalues
+
 }
 \keyword{datasets}

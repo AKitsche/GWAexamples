@@ -34,5 +34,14 @@ data(listerD5Mit357)
 kapmei <- survfit(Surv(pheno, cens) ~ geno, data = listerD5Mit357)
 plot(kapmei, lty = c(3,4,1))
 legend("topright", legend = c("aa", "Aa", "AA"), lty = c(3,4,1))
+
+#Approach using three different genetic models
+mdom2 <- coxph(Surv(pheno, cens) ~ dom, data=listerD5Mit357) #lin reg dom
+madd2 <- coxph(Surv(pheno, cens) ~ add, data=listerD5Mit357) #lin reg add
+mrec2 <- coxph(Surv(pheno, cens) ~ rec, data=listerD5Mit357) #lin reg rec
+
+#simultaneous assessment of multiple marginal models
+g <- glht(mmm(m1=mdom2, m2=madd2, m3=mrec2), mlf(m1="dom = 1", m2="add = 1", m3="rec = 1"))
+summary(g)
 }
 \keyword{datasets}
