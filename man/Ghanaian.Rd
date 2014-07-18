@@ -29,6 +29,31 @@ C. Loley, I.R Koenig, L. Hothorn, and A. Ziegler. A unifying framework for robus
 }
 \examples{
 data(Ghanaian)
-table(Ghanaian$y,Ghanaian$Genotype)
+head(Ghanaian)
+with(Ghanaian, table(y, Genotype))
+
+#graphical display
+mosaicplot(with(Ghanaian, table(y, Genotype)),main="")
+
+#calculating minor allele frequency
+sum(Ghanaian[,3],2*Ghanaian[,4])/(2*nrow(Ghanaian))
+#in this case "G" is the minor allele
+Ghanaian$Genotype <- factor(Ghanaian$Genotype, levels=c("TT","GT","GG"))
+Ghanaian$GenNum <- as.numeric(Ghanaian$Genotype)
+
+#pseudo numeric variables for different modes of inheritance
+Ghanaian$Add <- c(0, 0.5, 1)[Ghanaian$GenNum]
+Ghanaian$Dom <- c(0, 1, 1)[Ghanaian$GenNum]
+Ghanaian$Rec <- c(0, 0, 1)[Ghanaian$GenNum]
+
+#Approach using three different genetic models
+GLMdom <- glm(y ~ Dom ,family=binomial, data=Ghanaian)
+GLMadd <- glm(y ~ Add ,family=binomial, data=Ghanaian)
+GLMrec <- glm(y ~ Rec ,family=binomial, data=Ghanaian)
+
+#simultaneous assessment of multiple marginal models
+g <- glht(mmm(m1=GLMdom, m2=GLMadd, m3=GLMrec), mlf(m1="Dom=0", m2="Add=0", m3="Rec=0"))
+summary(g)
+summary(g)$test$pvalues
 }
 \keyword{datasets}
