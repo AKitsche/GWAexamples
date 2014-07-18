@@ -13,7 +13,7 @@ Quantitative trait analyis for 9 markers
   \describe{
     \item{\code{id}}{a numeric vector}
     \item{\code{tc}}{a numeric vector}
-    \item{\code{marker}}{a factor with levels \code{rs10498337} \code{rs11822822} \code{rs6829649} \code{rs709595} \code{rs726914} \code{rs7704530} \code{rs7738656} \code{rs7738656.1} \code{rs853773}}
+    \item{\code{marker}}{a factor with levels \code{rs10498337} \code{rs11822822} \code{rs6829649} \code{rs709595} \code{rs726914} \code{rs7704530} \code{rs7738656} \code{rs853773}}
     \item{\code{genotype}}{a factor with levels \code{het} \code{hom1} \code{hom2}}
     \item{\code{add}}{a numeric vector}
     \item{\code{rec}}{a numeric vector}
