@@ -2,7 +2,7 @@
 \alias{Depression}
 \docType{data}
 \title{
-Genome-wide association study on depressive symptoms at follow-up
+Genome-wide association study on depressive symptoms at follow-up.
 }
 \description{
 Genome-wide association studies have reported an association between the A-allele of rs1006737 within CACNA1C and affective disorders and schizophrenia.
